@@ -13,9 +13,11 @@
 
             // Creating scene, camera, and renderer
             var scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x6e6e6e);
             var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             var renderer = new THREE.WebGLRenderer();
             renderer.setSize(window.innerWidth, window.innerHeight);
+
             document.body.appendChild(renderer.domElement);
 
             // Updating rendering incase the window is resized
@@ -31,23 +33,33 @@
             controls = new THREE.OrbitControls(camera, renderer.domElement);
 
             // Creating Shapes
-            var geometry = new THREE.BoxGeometry(2, 2, 2);
-            var cubeMaterials = new THREE.MeshLambertMaterial({color: 0xFFFFFF, side: THREE.DoubleSide});
+            var geometry = new THREE.BoxGeometry(0.5, 1.5, 1.5);
+            var cubeMaterials = new THREE.MeshBasicMaterial({color: 0x111111, side: THREE.DoubleSide});
+            var cubeMaterials2 = new THREE.MeshLambertMaterial({color: 0xFFFFFF, side: THREE.DoubleSide});
             // Create material color/image texture
             var material = new THREE.MeshFaceMaterial(cubeMaterials);
-            var cube = new THREE.Mesh(geometry, material);
-            scene.add(cube);
+            var material2 = new THREE.MeshFaceMaterial(cubeMaterials2);
+            var cube1 = new THREE.Mesh(geometry, material);
+            var cube2 = new THREE.Mesh(geometry, material2);
+            var cube3 = new THREE.Mesh(geometry, material);
+            scene.add(cube1);
+            scene.add(cube2);
+            scene.add(cube3);
+            // changing cube positions
+            cube1.position.x = -0.5;
+            cube2.position.x = 0;
+            cube3.position.x = 0.5;
             // changing camera positon so you can actually see the object
-            camera.position.z = 3;
+            camera.position.z = 5;
 
             //Lighting
-            var ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.5);
+            var ambientLight = new THREE.AmbientLight(0xFFFFFF, 5.0);
             scene.add(ambientLight);
 
-            var spotLight = new THREE.PointLight(0xFF0000, 4, 50);
-            spotLight.position.y = 10;
-            spotLight.position.x = 10;
-            scene.add(spotLight);
+            // var spotLight = new THREE.PointLight(0xFF0000, 4, 50);
+            // spotLight.position.y = 10;
+            // spotLight.position.x = 10;
+            // scene.add(spotLight);
 
             // game logic
             var update = function () {
